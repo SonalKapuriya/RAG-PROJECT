@@ -17,7 +17,6 @@ venv-rag/
 *.log
 
 # Data files (RAG)
-resumes/
 *.pdf
 
 # ======================
