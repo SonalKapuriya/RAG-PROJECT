@@ -300,6 +300,7 @@ Be concise and helpful."""),
 
 HR Question: {question}""")
     ])
+    print("prompt",prompt)
 
     llm = ChatGroq(
         model="llama-3.1-8b-instant",
