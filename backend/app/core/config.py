@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     # API Keys
     GROQ_API_KEY: str = ""
     GEMINI_API_KEY: str = ""
+    HUGGINGFACE_API_KEY: str = ""
 
     # Qdrant
     QDRANT_URL: str = "http://localhost:6333"

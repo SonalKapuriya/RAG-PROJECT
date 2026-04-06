@@ -16,4 +16,5 @@ langchain-qdrant
 
 qdrant-client
 pypdf
-sentence-transformers
+# sentence-transformers
+huggingface-hub

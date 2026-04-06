@@ -8,18 +8,19 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from app.core.config import settings
 from app.core.qdrant import ensure_collection
-
+# from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 _embeddings: HuggingFaceEmbeddings | None = None
 
 
-def get_embeddings() -> HuggingFaceEmbeddings:
+def get_embeddings():
     global _embeddings
     if _embeddings is None:
-        _embeddings = HuggingFaceEmbeddings(
-            model_name=settings.EMBED_MODEL
+        _embeddings = HuggingFaceInferenceAPIEmbeddings(
+            api_key=settings.HUGGINGFACE_API_KEY,
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
         )
     return _embeddings
-
 
 def ingest_resume(file_path: str, filename: str) -> dict:
     # 1. Load PDF pages
