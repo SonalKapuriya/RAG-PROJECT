@@ -27,9 +27,13 @@ app.add_middleware(
 def startup():
     os.makedirs(settings.RESUMES_FOLDER, exist_ok=True)
     ensure_collection()
+    from app.services.ingestor import get_embeddings
+    get_embeddings()  
     print(f"✅ {settings.APP_NAME} started")
     print(f"📦 Qdrant: {settings.QDRANT_URL}")
     print(f"📁 Resumes folder: {settings.RESUMES_FOLDER}")
+
+
 
 
 app.include_router(resumes.router)
@@ -55,3 +59,13 @@ def root():
         "version": settings.VERSION,
         "docs": "/docs",
     }
+
+
+@app.on_event("startup")
+def startup():
+    os.makedirs(settings.RESUMES_FOLDER, exist_ok=True)
+    ensure_collection()
+    # Pre-load embedding model so first request isn't slow
+    from app.services.ingestor import get_embeddings
+    get_embeddings()
+    print(f"✅ {settings.APP_NAME} started")
