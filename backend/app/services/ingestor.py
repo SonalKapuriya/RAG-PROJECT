@@ -13,12 +13,18 @@ from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 _embeddings: HuggingFaceEmbeddings | None = None
 
 
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+import time
+
+_embeddings = None
+
 def get_embeddings():
     global _embeddings
     if _embeddings is None:
-        _embeddings = HuggingFaceInferenceAPIEmbeddings(
-            api_key=settings.HUGGINGFACE_API_KEY,
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        _embeddings = GoogleGenerativeAIEmbeddings(
+            model="models/gemini-embedding-001",
+            google_api_key=settings.GEMINI_API_KEY,
+            task_type="retrieval_document"
         )
     return _embeddings
 
@@ -47,6 +53,7 @@ def ingest_resume(file_path: str, filename: str) -> dict:
         url=settings.QDRANT_URL,
         api_key=settings.QDRANT_API_KEY,
         collection_name=settings.COLLECTION_NAME,
+        force_recreate=True
     )
 
     return {

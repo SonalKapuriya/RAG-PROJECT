@@ -9,6 +9,7 @@ __pycache__/
 # Virtual environment
 venv/
 venv-rag/
+venvvv/
 
 # Environment file (VERY IMPORTANT)
 .env
